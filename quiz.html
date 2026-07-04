@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тести — БіоТест</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Навігація -->
+  <nav>
+  <div class="nav-container">
+    <a href="index.html" class="logo">BioTest</a>
+    <div class="nav-links">
+      <a href="index.html">Головна</a>
+      <a href="select-test.html">Тести</a>
+      <a href="stats.html">Статистика</a>
+      <a href="notes.html">Конспекти</a>
+    </div>
+  </div>
+</nav>
+    
+
+  <div class="quiz-container">
+    <div class="quiz-header">
+  <h1 id="test-title">Фаховий тест з біології</h1>
+  
+  <div class="test-info">
+    <!-- Тут буде круглий таймер і бали (як було раніше) -->
+  </div>
+
+  <!-- Інші елементи залишаються -->
+</div>
+
+  <!-- Таймер + Бали -->
+  <div class="timer-score-row">
+    <!-- Круглий таймер -->
+    <div class="timer-circle">
+      <svg class="timer-svg" width="100" height="100">
+        <circle class="timer-bg" cx="50" cy="50" r="44"></circle>
+        <circle class="timer-progress" id="timer-progress" cx="50" cy="50" r="44"></circle>
+      </svg>
+      <div class="timer-text">
+        <span id="timer-min">60</span>:<span id="timer-sec">00</span>
+      </div>
+    </div>
+
+    <!-- Бали -->
+    <div class="score-block">
+      <div class="score-label">Набрано балів</div>
+      <div id="current-score" class="score-value">0 / 100</div>
+    </div>
+  </div>
+
+  <!-- Прогрес питань -->
+  <div class="progress-info">
+    <span id="question-counter">Питання <strong>1</strong> з 50</span>
+    <div class="progress-bar-container">
+      <div id="progress-bar" class="progress-bar"></div>
+    </div>
+  </div>
+</div>
+
+    <!-- Питання -->
+    <div class="question-card">
+      <p id="question-text" class="question-text">Завантаження питання...</p>
+      
+      <div id="options-container" class="options-container">
+        <!-- Варіанти відповідей генеруються JS -->
+      </div>
+    </div>
+
+    <!-- Навігація питань -->
+    <div class="quiz-navigation">
+      <button onclick="prevQuestion()" id="btn-prev" class="nav-btn">
+        <i class="fas fa-arrow-left"></i> Попереднє
+      </button>
+
+      <button onclick="checkAnswer()" id="btn-check" class="nav-btn check-btn">
+    Перевірити відповідь
+  </button>
+  
+      <button onclick="nextQuestion()" id="btn-next" class="nav-btn primary">
+        Наступне <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <script src="questions.js"></script>
+  <script src="quiz-script.js"></script>
+
+  <!-- Фінальна сторінка результатів -->
+  <div id="result-screen" class="result-screen hidden">
+    <div class="result-card">
+      <h1>Тест завершено!</h1>
+      
+      <div class="final-score">
+        <div id="final-percentage" class="percentage">85</div>
+        <div class="score-details">
+          <div>Набрано балів: <strong id="final-score">85</strong> / 100</div>
+          <div id="final-grade" class="final-grade">Відмінно</div>
+        </div>
+      </div>
+
+      <div class="result-message" id="result-message">
+        Молодець! Хороший результат.
+      </div>
+
+      <div class="result-buttons">
+        <button onclick="restartTest()" class="nav-btn primary">
+          Спробувати ще раз
+        </button>
+        <button onclick="goToHome()" class="nav-btn">
+          Повернутися на головну
+        </button>
+      </div>
+    </div>
+  </div>
+  
+<script src="stats.js"></script>
+  <script src="quiz-script.js"></script>
+
+</body>
+</html>

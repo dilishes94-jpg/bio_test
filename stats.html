@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Моя статистика — БіоТест</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <nav>
+  <div class="nav-container">
+    <a href="index.html" class="logo">BioTest</a>
+    <div class="nav-links">
+      <a href="index.html">Головна</a>
+      <a href="select-test.html">Тести</a>
+      <a href="stats.html">Статистика</a>
+      <a href="notes.html">Конспекти</a>
+    </div>
+  </div>
+</nav>
+
+<div class="stats-container">
+    <h1>Моя статистика</h1>
+
+  <div class="global-stats">
+      <div class="stat-card">
+        <h3>Загальна кількість тестів</h3>
+        <div id="total-tests" class="stat-number">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Найкращий результат</h3>
+        <div id="best-score" class="stat-number">0%</div>
+      </div>
+      <div class="stat-card">
+        <h3>Найгірший результат</h3>
+        <div id="worst-score" class="stat-number">0%</div>
+      </div>
+    </div>
+
+    <h2>Результати по темах</h2>
+    <div id="topics-stats" class="topics-grid">
+      <!-- Заповнюється JavaScript -->
+    </div>
+
+    <div class="actions">
+      <button onclick="Stats.clearStats()" class="clear-btn">
+        Очистити статистику
+      </button>
+    </div>
+  </div>
+
+  <script src="stats.js"></script>
+ <script src="stats.js"></script>
+  <script>
+    function loadStats() {
+      const stats = Stats.getStats();
+      const global = Stats.getGlobalStats();
+
+      document.getElementById('total-tests').textContent = global.totalTests || 0;
+      document.getElementById('best-score').textContent = (global.best || 0) + "%";
+      document.getElementById('worst-score').textContent = (global.worst || 0) + "%";
+
+      const container = document.getElementById('topics-stats');
+      container.innerHTML = '';
+
+      Object.keys(stats).forEach(topic => {
+        if (topic === 'global') return;
+        const results = stats[topic];
+        if (!results || results.length === 0) return;
+
+        const avg = results.length > 0 
+          ? (results.reduce((sum, r) => sum + r.percentage, 0) / results.length).toFixed(1) 
+          : 0;
+
+        const bestInTopic = results.length > 0 
+          ? Math.max(...results.map(r => r.percentage)) 
+          : 0;
+
+        let displayName = topic;
+        if (topic === 'fachovy') displayName = 'Фаховий тест';
+
+        const div = document.createElement('div');
+        div.className = 'topic-stat-card';
+        div.innerHTML = `
+          <h3>${displayName}</h3>
+          <p>Пройдено: <strong>${results.length}</strong> разів</p>
+          <p>Середній результат: <strong>${avg}%</strong></p>
+          <p>Найкращий: <strong>${bestInTopic}%</strong></p>
+          <p>Останній: <strong>${results[results.length-1].percentage}%</strong></p>
+        `;
+        container.appendChild(div);
+      });
+
+      if (container.innerHTML === '') {
+        container.innerHTML = '<p>Ви ще не пройшли жодного тесту.</p>';
+      }
+    }
+
+    window.onload = loadStats;
+  </script>
+
+</body>
+</html>
